@@ -1,35 +1,41 @@
-# Application Name 
 
-General descriptions of the application go here.
+
+# Application Name : sudoku_checker
+
+This code check for the validity  of 9*9 sudoku by iterating through 9 rows, 9 columns and 9 grids of 3*3.
+It verifies that if all three rows, columns and grids have exactly 1-9 numbers without any repetition.
+
 
 
 
 
 ## Technologies
 
-The descriptions of the technologies that are used in this application go here. It includes dependencies or pre-requisites.
-
+My application uses basic functionality of C language. I use file handing in order to retrieve data of Sudoku from a file.
+Moreover I used multi-threading by assigning 1 thread to every row, column, and grid. Hence consuming 27 threads.
 
 
 
 ## Build and Installation
 
-Instructions on how to build and install the application go here.
-
-
+This code successfully compile without giving any errors during compilation.
+User just need to give the following commands:
+make clean
+make
 
 
 ## Usage
 
-Instructions on how to run the application go here.
-
+User just need to give the following commands:
+make clean
+make
 
 
 
 ## Contributors
-
-List of the contributors goes here.
-
+Instructor name: Humayun Kabir
+list of contributor: 1) Ayush Garg
+I did the assignment individually.
 
 
 

@@ -14,18 +14,18 @@
 #define __SUDOKU_CHECKER_HEADER__
 
 
-#define PUZZLE_SIZE 9 		//sudoku puzzle dimension	
+#define PUZZLE_SIZE 9 		//sudoku puzzle dimension
 #define NUMBER_OF_THREADS 27	//number of threads that concurrently verify the validity of the sudoku solution
 #define LINE_MAX_LENGTH 100	//maximum length of a line in the sudoku solution file
 
 
 /*
- * Data structure to pass parameters to each worker thread 
+ * Data structure to pass parameters to each worker thread
  */
 typedef struct {
 	int thread_no;
-	int x;
-	int y;
+	int row;
+	int column;
 } parameters;
 
 
@@ -41,13 +41,13 @@ void show_puzzle();
 // Show in memory content of the solution of a sudoku puzzle
 
 
-void* row_worker(void* param);
+void *row_worker(void* param);
 // Check whether the row of the sudoku puzzle solution referred by the param contains all the digits from 1 to 9
-// Set the appropriate status value in status map. The status map is an externally defined one-dimensional array 
+// Set the appropriate status value in status map. The status map is an externally defined one-dimensional array
 // (global variable).
 
 
-void* col_worker(void* param);
+void *col_worker(void* param);
 // Check whether the column of the sudoku puzzle solution referred by the param contains all the digits from 1 to 9
 // Set the appropriate status value in status map.
 
