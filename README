@@ -11,9 +11,11 @@ It verifies that if all three rows, columns and grids have exactly 1-9 numbers w
 
 ## Technologies
 
-My application uses basic functionality of C language. I use file handing in order to retrieve data of Sudoku from a file.
-Moreover I used multi-threading by assigning 1 thread to every row, column, and grid. Hence consuming 27 threads.
-
+This code is fully developed in C programming language.
+To run a c programming you need a compiler.
+For Linux you can use GNU GCC and
+for windows Turbo C++ IDE / Dev C++ / Borland C Compiler / Code Block/ mingw etc.
+MAC users can simply compile it on terminal
 
 
 ## Build and Installation
@@ -22,23 +24,33 @@ This code successfully compile without giving any errors during compilation.
 User just need to give the following commands:
 make clean
 make
+make run
 
 
 ## Usage
 
-User just need to give the following commands:
-make clean
-make
+To run the program, there is a makefile that is already designed.
+User simply need to type make to build all the dependencies;
+Then user will type make run that will give executable files to user
+ultimately our user will be having following options to run/check the program with the given input text files.
+>bin/sudoku_checker resource/sudoku_valid.txt
+>bin/sudoku_checker resource/sudoku_invalid.txt
+
 
 
 
 ## Contributors
-Instructor name: Humayun Kabir
-list of contributor: 1) Ayush Garg
-I did the assignment individually.
 
+List of the contributors goes here.
+
+Instructor Name: Humayun Kabir
+Contributor Name: Ayush Garg
 
 
 ## License
 
-Terms and conditions or the types of licenses granted to use this application go here.
+Copyright (C) 2020, Ayush Garg
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License.

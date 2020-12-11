@@ -10,8 +10,8 @@
 
 
 
-#ifndef __SUDOKU_CHECKER_HEADER__
-#define __SUDOKU_CHECKER_HEADER__
+#ifndef _SUDOKU_CHECKER_HEADER_
+#define _SUDOKU_CHECKER_HEADER_
 
 
 #define PUZZLE_SIZE 9 		//sudoku puzzle dimension
@@ -24,8 +24,8 @@
  */
 typedef struct {
 	int thread_no;
-	int row;
-	int column;
+	int x;
+	int y;
 } parameters;
 
 
@@ -41,13 +41,13 @@ void show_puzzle();
 // Show in memory content of the solution of a sudoku puzzle
 
 
-void *row_worker(void* param);
+void* row_worker(void* param);
 // Check whether the row of the sudoku puzzle solution referred by the param contains all the digits from 1 to 9
 // Set the appropriate status value in status map. The status map is an externally defined one-dimensional array
 // (global variable).
 
 
-void *col_worker(void* param);
+void* col_worker(void* param);
 // Check whether the column of the sudoku puzzle solution referred by the param contains all the digits from 1 to 9
 // Set the appropriate status value in status map.
 

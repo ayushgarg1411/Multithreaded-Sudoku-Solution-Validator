@@ -2,9 +2,8 @@
  * @file: main.c
  * @author: Ayush Garg, 656665809, F20N01, CSCI 360, VIU
  * @version: 1.0.0
- * @modified: October 15, 2020
+ * @modified: Dec 10, 2020
  *
- * Sudoku Checker application.
  *
  */
 
@@ -17,30 +16,87 @@
 #include "sudoku_checker.h"
 
 
-int puzzle[PUZZLE_SIZE+1][PUZZLE_SIZE+1]; 	// In memory solutiona of a sudoku puzzle
-int status_map[NUMBER_OF_THREADS];       	// Status maps updated by corresponding worker thread
+int puzzle[PUZZLE_SIZE+1][PUZZLE_SIZE+1];
+int status_map[NUMBER_OF_THREADS];
 
-parameters* worker_params[NUMBER_OF_THREADS]; 	// Array of worker thread parameter pointers
-pthread_t workers[NUMBER_OF_THREADS];		// Array of worker threads
+parameters* worker_params[NUMBER_OF_THREADS];
+pthread_t workers[NUMBER_OF_THREADS];
 
 
-int main(int argc, char** argv) {
-	FILE* sudoku_file;
-	sudoku_file = fopen(argv[1], "r");
-	//Read the sudoku solution from	the file specified by command line argumant
-	read_from_file(sudoku_file);
-	//Display the solution to the scree.
-	void show_puzzle();
-	//Create and run all the column threads with appropriate thread paramaters to verify the columns of the solution.
-	void *col_worker(void* param);
-	//Create and run all the row threads with appropriate thread parameters to verify the rows of the solution.
-	void *row_worker(void* param);
-	//Create and run all the subgrid threads with appropariate thread parameters to verify the subgrids of the solution.
-	//void* subgrid_worker(void* param);
-	//Wait for all thread to complete.
-	//Check the results from all threads through status map.
-	//Display whether the solution is valid or not.
-	int check_status_map();
+
+
+int main(int argc, char** argv)
+{
+
+	FILE* fp;
+	if(argc < 2)
+	{
+		printf("Usage: sudoku_checker <input_file_name>");
+		return 0;
+	}
+	fp = fopen(argv[1], "r");
+	read_from_file(fp);
+	fclose(fp);
+	int i, j, t_num=0;
+	int t_index = 0;
+	show_puzzle();
+
+	for (i = 0; i < PUZZLE_SIZE; i++)
+	{
+		for (j = 0; j < PUZZLE_SIZE; j++)
+		{
+			if (j == 0)
+			{
+					worker_params[t_num] = (parameters *) malloc(sizeof(parameters));
+					worker_params[t_num]->thread_no= t_num;
+					worker_params[t_num] ->x = i;
+					worker_params[t_num] ->y = j;
+					pthread_create(&workers[t_index], NULL, row_worker, 	worker_params[t_num] );
+					t_index++;
+					t_num++;
+				}
+
+			if (i == 0)
+			{
+				worker_params[t_num] = (parameters *) malloc(sizeof(parameters));
+				worker_params[t_num]->thread_no = t_num;
+				worker_params[t_num]->x= i;
+				worker_params[t_num]->y = j;
+				pthread_create(&workers[t_index], NULL, col_worker, 	worker_params[t_num] );
+				t_index++;
+				t_num++;
+			}
+
+			if (i%3 == 0 && j%3 == 0)
+			{
+				worker_params[t_num]  = (parameters *) malloc(sizeof(parameters));
+				worker_params[t_num]->thread_no= t_num;
+				worker_params[t_num] ->x = i;
+				worker_params[t_num] ->y = j;
+				pthread_create(&workers[t_index], NULL, subgrid_worker, 	worker_params[t_num] );
+				t_index++;
+				t_num++;
+			}
+		}
+	}
+
+	for (i = 0; i < NUMBER_OF_THREADS; i++)
+	{
+		pthread_join(workers[i], NULL);
+	}
+
+	int status = check_status_map();
+	printf("\n*******************************************************************************************\n");
+	if(status)
+	{
+		printf("............................. Valid Solution ..............................................");
+	}
+	else
+	{
+		printf("............................. Invalid Solution ..............................................");
+	}
+	printf("\n*******************************************************************************************\n");
 
 	return 0;
+
 }
